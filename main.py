@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 
 x = np.arange(-10, 10, 0.01)
 rise_flag = False
+func_rise = []
+func_fall = []
 
 
 def func(x):
@@ -24,11 +26,20 @@ def func(x):
 
 def fall_rise_ind(x):
     global rise_flag
+    global func_fall
+    global func_rise
+    buffer_index = 0
     for i in range(len(x) - 1):
         if func(x[i]) > func(x[i + 1]):
-            rise_flag = False
+            if rise_flag:
+                func_rise.append(x[buffer_index: i])
+                buffer_index = i
+                rise_flag = False
         else:
-            rise_flag = True
+            if not rise_flag:
+                func_fall.append(x[buffer_index: i])
+                buffer_index = i
+                rise_flag = True
 
 
 # def sqr_roots(a, b, c):
@@ -50,17 +61,24 @@ def fall_rise_ind(x):
 
 
 def change_func(x):
-    y = [func(i) for i in x]
+    # y = [func(i) for i in x]
+    fall_rise_ind(x)
     # plt.title(f'Корни функции: {round(sqr_roots(a, b, c)[0], 2)}, {round(sqr_roots(a, b, c)[1], 2)}')
     plt.xlabel('Ось X')
     plt.ylabel('Ось Y')
     plt.grid()
-    plt.plot(x, y, 'r')
+    # plt.plot(x, y, 'r')
+    for i in func_fall:
+        y = [func(j) for j in i]
+        plt.plot(i, y, 'r', label="Убывание")
     # plt.plot(x_range_down, func(x_range_down), 'r', label="Убывание")
+    for i in func_rise:
+        y = [func(j) for j in i]
+        plt.plot(i, y, 'b', label="Возрастание")
     # plt.plot(x_range_up, func(x_range_up), 'b', label="Возрастание")
     # plt.plot(x, func(x), 'ro')
     # plt.text(x, func(x) + 30, f'Вершина функции x = {x}')
-    # plt.legend()
+    plt.legend()
     plt.show()
 
 
