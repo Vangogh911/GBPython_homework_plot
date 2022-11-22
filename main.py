@@ -42,43 +42,19 @@ def fall_rise_ind(x):
                 rise_flag = True
 
 
-# def sqr_roots(a, b, c):
-#     dscrt = b ** 2 - 4 * a * c
-#     if dscrt > 0:
-#         x1 = (-b + math.sqrt(dscrt)) / (2 * a)
-#         x2 = (-b - math.sqrt(dscrt)) / (2 * a)
-#         return x1, x2
-#     elif dscrt == 0:
-#         x = -b / (2 * a)
-#         return x
-#     else:
-#         return None
-
-
-# min_func = min(func(x))
-
-# x = sqr_roots(a, b, c-min_func)
-
-
 def change_func(x):
-    # y = [func(i) for i in x]
     fall_rise_ind(x)
-    # plt.title(f'Корни функции: {round(sqr_roots(a, b, c)[0], 2)}, {round(sqr_roots(a, b, c)[1], 2)}')
+    plt.title(f'Корней функции бесконечное множество')
     plt.xlabel('Ось X')
     plt.ylabel('Ось Y')
     plt.grid()
-    # plt.plot(x, y, 'r')
+    plt.plot([x[0], x[-1]], [0, 0], ':g')
     for i in func_fall:
         y = [func(j) for j in i]
-        plt.plot(i, y, 'r', label="Убывание")
-    # plt.plot(x_range_down, func(x_range_down), 'r', label="Убывание")
+        plt.plot(i, y, 'r')
     for i in func_rise:
         y = [func(j) for j in i]
-        plt.plot(i, y, 'b', label="Возрастание")
-    # plt.plot(x_range_up, func(x_range_up), 'b', label="Возрастание")
-    # plt.plot(x, func(x), 'ro')
-    # plt.text(x, func(x) + 30, f'Вершина функции x = {x}')
-    plt.legend()
+        plt.plot(i, y, 'b')
     plt.show()
 
 
